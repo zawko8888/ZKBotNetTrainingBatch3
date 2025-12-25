@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="ZKBotNetTrainingBatch3.ConsoleApp/ZKBotNetTrainingBatch3.ConsoleApp.csproj" />
+  <Project Path="ZKDotNetTrainingBatch3/ZKDotNetTrainingBatch3.csproj" Id="91575e00-f0bf-48e1-9a03-3155d9520350" />
 </Solution>
