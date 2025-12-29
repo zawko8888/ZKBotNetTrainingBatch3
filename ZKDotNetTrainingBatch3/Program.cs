@@ -11,6 +11,12 @@ ProductService productService = new ProductService();
 //productService.Read();
 //productService.Create();
 //productService.Update();
-productService.Delete();
+//productService.Delete();
+
+ProductDapperService productDapperService = new ProductDapperService();
+//productDapperService.Read();
+//productDapperService.Create();
+//productDapperService.Update();
+productDapperService.Delete();
 
 Console.WriteLine();
