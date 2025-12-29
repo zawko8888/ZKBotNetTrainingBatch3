@@ -11,36 +11,28 @@ namespace ZKDotNetTrainingBatch3
 {
     public class ProductService
     {
-
         SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder()
         {
             DataSource = "VJPG11",
             InitialCatalog = "Batch3MiniPOS",
             UserID = "sa",
             Password = "sasa@123",
-            TrustServerCertificate = true
-        };
-        //SqlConnectionStringBuilder sqlCollectionStringBuilder = new SqlConnectionStringBuilder();
-        //sqlCollectionStringBuilder.DataSource = "VJPG11";
-        //sqlCollectionStringBuilder.InitialCatalog = "Batch3MiniPOS";
-        //sqlCollectionStringBuilder.UserID = "sa";
-        //sqlCollectionStringBuilder.Password = "sasa@123";
-        //sqlCollectionStringBuilder.TrustServerCertificate = true;
+            TrustServerCertificate = true,
+        };   
         
         public void Read()
         {
-            //SqlConnection connection = new SqlConnection("Data Source = VJPG11;Initial Catalog=Batch3MiniPOS;User ID=sa;Passwor =sasa@123;TrustServerCertificate=true");
             SqlConnection connection = new SqlConnection(sqlConnectionStringBuilder.ConnectionString);
-            
             connection.Open();
-            string query = @"SELECT [Product_Id]
-                  ,[Product_Name]
-                  ,[Product_Quantity]
-                  ,[Product_Price]
-                  ,[Product_DeleteFlag]
-              FROM [dbo].[Tbl_Product]";
 
-            SqlCommand cmd = new SqlCommand(query, connection);
+            string query = @"SELECT [Product_Id]
+                          ,[Product_Name]
+                          ,[Product_Quantity]
+                          ,[Product_Price]
+                          ,[Product_DeleteFlag]
+                      FROM [dbo].[Tbl_Product]";
+
+            SqlCommand cmd = new SqlCommand(query,connection);
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
@@ -50,55 +42,69 @@ namespace ZKDotNetTrainingBatch3
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DataRow row = dt.Rows[i];
-                int RowNo = i + 1;
-                decimal Price = Convert.ToDecimal(row["Product_Price"]);
-                Console.WriteLine(RowNo.ToString() + ". " + "Product_Name" + row["Product_Name"] + ", " + "Product_Quantity" + " " + row["Product_Quantity"] + " & " + "(" + Price.ToString("n0") + ")");
+                int rowNo = i + 1;
+                decimal price = Convert.ToDecimal(row["Product_Price"]);
+                Console.WriteLine(rowNo.ToString() + ". " + row["Product_Name"] + " (" + row["Product_Quantity"] + price.ToString("n0") + ") ");
             }
         }
-        public void Create() {
+
+        public void Create()
+        {
             string query = @"INSERT INTO [dbo].[Tbl_Product]
-                           ([Product_Name]
-                           ,[Product_Quantity]
-                           ,[Product_Price]
-                           ,[Product_DeleteFlag])
-                     VALUES
-                           ('zaw'
-                           ,3
-                           ,1000
-                           ,0)";
+                               ([Product_Name]
+                               ,[Product_Quantity]
+                               ,[Product_Price]
+                               ,[Product_DeleteFlag])
+                         VALUES
+                               ('WaterMalon'
+                               ,3
+                               ,3500
+                               ,0)";
 
             SqlConnection connection = new SqlConnection(sqlConnectionStringBuilder.ConnectionString);
             connection.Open();
+
             SqlCommand cmd = new SqlCommand(query, connection);
             int result = cmd.ExecuteNonQuery();
-            connection.Close();
-            string message = result > 0 ? "Saving Successful." : "Saving failed";
             
+            connection.Close();
+            string message = (result > 0 ? "Saving Success." : "Saving Filed");
             Console.WriteLine(message);
         }
-        public void Update() {
-            string query = @"INSERT INTO [dbo].[Tbl_Product]
-                           ([Product_Name]
-                           ,[Product_Quantity]
-                           ,[Product_Price]
-                           ,[Product_DeleteFlag])
-                     VALUES
-                           ('zaw'
-                           ,3
-                           ,1000
-                           ,0)";
+
+        public void Update()
+        {
+            string query = @"UPDATE [dbo].[Tbl_Product]
+                           SET [Product_Name] = 'Malon'
+                              ,[Product_Quantity] = 6
+                              ,[Product_Price] = 8000
+                              ,[Product_DeleteFlag] = 0
+                         WHERE Product_Id = 16;";
 
             SqlConnection connection = new SqlConnection(sqlConnectionStringBuilder.ConnectionString);
             connection.Open();
+
             SqlCommand cmd = new SqlCommand(query, connection);
             int result = cmd.ExecuteNonQuery();
-            connection.Close();
-            string message = result > 0 ? "Saving Successful." : "Saving failed";
 
+            connection.Close();
+            string message = (result > 0 ? "Update Success." : "Update Filed");
             Console.WriteLine(message);
         }
-        public void Delete() { 
-        
+
+        public void Delete()
+        {
+            string query = @"Delete From Tbl_Product WHERE Product_Id = 13;";
+
+            SqlConnection connection = new SqlConnection(sqlConnectionStringBuilder.ConnectionString);
+            connection.Open();
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+            int result = cmd.ExecuteNonQuery();
+
+            connection.Close();
+            string message = (result > 0 ? "Delete Success." : "Delete Filed");
+            Console.WriteLine(message);
         }
     }
 }

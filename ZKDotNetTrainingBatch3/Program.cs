@@ -8,11 +8,9 @@ using ZKDotNetTrainingBatch3;
 Console.WriteLine("Hello, World!");
 
 ProductService productService = new ProductService();
-productService.Read();
-productService.Create();
-
-
-
-
+//productService.Read();
+//productService.Create();
+//productService.Update();
+productService.Delete();
 
 Console.WriteLine();
